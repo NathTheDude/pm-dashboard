@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install necessary packages
+      apt:
+        name:
+          - python3
+          - python3-pip
+        state: present
+
+    - name: Provision VM
+      command: echo 'Provisioning VM...'
+
+    - name: Create a user
+      user:
+        name: testuser
+        state: present
+
+    - name: Start a service
+      service:
+        name: apache2
+        state: started
