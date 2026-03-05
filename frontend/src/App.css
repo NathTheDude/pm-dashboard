@@ -1,0 +1,334 @@
+/* ─── Global reset & variables ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --surface2: #22223b;
+  --accent: #4cc9f0;
+  --accent2: #7209b7;
+  --text: #e0e0ff;
+  --text-muted: #8888aa;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --danger: #ef5350;
+  --radius: 10px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 24px 16px;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ─── Navbar ───────────────────────────────────────────────────────────────── */
+.navbar {
+  background: var(--surface);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 56px;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 1px;
+  flex: 1;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+}
+
+.navbar-nav a {
+  text-decoration: none;
+  color: var(--text-muted);
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-nav a:hover,
+.navbar-nav a.active {
+  background: var(--surface2);
+  color: var(--accent);
+}
+
+/* ─── Page header ──────────────────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ─── Week navigation ──────────────────────────────────────────────────────── */
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.week-nav span {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  min-width: 140px;
+  text-align: center;
+}
+
+/* ─── Buttons ──────────────────────────────────────────────────────────────── */
+.btn {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-primary  { background: var(--accent);  color: #000; }
+.btn-secondary { background: var(--surface2); color: var(--text); }
+.btn-danger   { background: var(--danger);  color: #fff; }
+.btn-sm { padding: 4px 12px; font-size: 0.82rem; }
+
+/* ─── Card ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+/* ─── Fitness week grid ────────────────────────────────────────────────────── */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.day-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.day-card.today {
+  border: 2px solid var(--accent);
+}
+
+.day-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.day-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.day-date {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.field-label.planned { color: var(--accent); }
+.field-label.actual  { color: var(--success); }
+.field-label.notes   { color: var(--warning); }
+.field-label.meals   { color: var(--accent); }
+.field-label.highlights { color: var(--success); }
+.field-label.struggles  { color: var(--danger); }
+
+textarea {
+  background: var(--surface2);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  padding: 8px 10px;
+  resize: vertical;
+  width: 100%;
+  min-height: 68px;
+  transition: border-color 0.2s;
+  line-height: 1.5;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.save-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.saved-indicator {
+  font-size: 0.78rem;
+  color: var(--success);
+  align-self: center;
+  margin-right: 8px;
+}
+
+/* ─── Food log ─────────────────────────────────────────────────────────────── */
+.date-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.date-nav span {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  min-width: 120px;
+  text-align: center;
+}
+
+.food-log-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.food-log-card .field-group textarea {
+  min-height: 100px;
+}
+
+/* ─── History section ──────────────────────────────────────────────────────── */
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--surface2);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.history-item:hover { background: var(--surface2); }
+
+.history-item .date {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.history-item .preview {
+  flex: 1;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-item .actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ─── Loading / empty state ────────────────────────────────────────────────── */
+.loading, .empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 48px 0;
+  font-size: 0.95rem;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .main-content { padding: 16px 10px; }
+  .navbar { padding: 0 12px; }
+  .page-header { flex-direction: column; align-items: flex-start; }
+}
